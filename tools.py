@@ -13,15 +13,10 @@ class RemoteDockerManager:
     def _get_client(self):
         """Lazy initialization of the Docker SDK client over SSH"""
         if self.client is None:
-            # Construct standard SSH connection string for Docker SDK
-            # Example: ssh://n0mad@192.168.0.10
             base_url = f"ssh://{self.username}@{self.host}"
-            
-            # The docker library automatically picks up keys from your ssh-agent.
-            # If you need a specific key, we can pass it via environment variables 
-            # that the docker/ssh subsystem respects under the hood.
+
             if self.key_filename:
-                os.environ["SSH_AUTH_SOCK"] = "" # Forces usage of explicit key if needed
+                os.environ["SSH_AUTH_SOCK"] = ""
                 
             self.client = docker.DockerClient(base_url=base_url, use_ssh_client=True)
         return self.client
@@ -33,7 +28,6 @@ class RemoteDockerManager:
         """
         try:
             client = self._get_client()
-            # Fetch all containers (including stopped ones)
             containers = client.containers.list(all=True)
             
             if not containers:
@@ -56,7 +50,6 @@ class RemoteDockerManager:
             client = self._get_client()
             container = client.containers.get(container_name)
             
-            # Fetch logs as bytes, decode to string
             logs = container.logs(tail=int(lines), stdout=True, stderr=True)
             output = logs.decode('utf-8')
             
@@ -99,13 +92,12 @@ class RemoteDockerManager:
         Returns detailed configuration and state information for a specific container (docker inspect).
         Useful for checking environment variables, network modes (e.g., VPN dependencies), mounts, and exact state.
         """
-        import json # just in case it's not imported at the top
+        import json
         try:
             client = self._get_client()
             container = client.containers.get(container_name)
             attrs = container.attrs
             
-            # Extracting only the most relevant parts to avoid token overflow
             relevant_info = {
                 "Name": attrs.get("Name"),
                 "State": attrs.get("State", {}),
