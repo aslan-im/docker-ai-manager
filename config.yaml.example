@@ -1,0 +1,9 @@
+servers:
+  - name: srv1
+    host: 192.168.0.19
+    username: admin
+    key_filename: ~/.ssh/id_ed25519
+  - name: raspi
+    host: 192.168.0.20
+    username: pi
+    key_filename: ~/.ssh/id_ed25519
