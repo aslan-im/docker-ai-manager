@@ -101,7 +101,7 @@ def interact_with_agent(messages: list, active_tools: list, model_name: str = "g
                         sub_messages = [
                             {
                                 "role": "system",
-                                "content": "You are a read-only Monitor Agent. Fetch logs, check disk space, and list containers based on instructions. Return a clear summary."
+                                "content": "You are a read-only Monitor Agent. Fetch logs, check disk space, and list containers based on instructions. Return a clear summary. IMPORTANT: The ONLY available servers are: {AVAILABLE_SERVERS}."
                             },
                             {
                                 "role": "user",
@@ -117,7 +117,7 @@ def interact_with_agent(messages: list, active_tools: list, model_name: str = "g
                         sub_messages = [
                             {
                                 "role": "system",
-                                "content": "You are an Admin Agent. Execute restart and wait commands based on instructions. Return a clear summary."
+                                "content": "You are an Admin Agent. Execute restart and wait commands based on instructions. Return a clear summary. IMPORTANT: The ONLY available servers are: {AVAILABLE_SERVERS}."
                             },
                             {
                                 "role": "user",
