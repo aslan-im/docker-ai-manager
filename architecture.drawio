@@ -1,0 +1,134 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+  <diagram id="iYW5J_ZNbehQ8XWvvagc" name="Page-1">
+    <mxGraphModel dx="1554" dy="861" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="g1" value="Local Configuration" style="swimlane;startSize=25;fillColor=#f9ffe0;strokeColor=#82b366;strokeDasharray=8 4;fontStyle=2;fontSize=11;fontColor=#5a7a40;swimlaneLine=1;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="222.5" width="260" height="305" as="geometry" />
+        </mxCell>
+        <mxCell id="g2" value="Multi-Agent System  (agent.py: interact_with_agent)" style="swimlane;startSize=25;fillColor=#f5f0ff;strokeColor=#9673a6;strokeDasharray=8 4;fontStyle=2;fontSize=11;fontColor=#6a4a80;swimlaneLine=1;rounded=1;container=0;" parent="1" vertex="1">
+          <mxGeometry x="55" y="660" width="820" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="g3" value="Remote Infrastructure" style="swimlane;startSize=25;fillColor=#fff5f5;strokeColor=#b85450;strokeDasharray=8 4;fontStyle=2;fontSize=11;fontColor=#a03030;swimlaneLine=1;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="20" y="1220" width="1190" height="275" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="&lt;b&gt;Remote Docker Host&lt;/b&gt;&lt;br&gt;Linux Server (e.g. thinkpad)&lt;br&gt;192.168.0.x" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=15;" parent="g3" vertex="1">
+          <mxGeometry x="70" y="175" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="&lt;b&gt;Docker Engine API&lt;/b&gt;&lt;br&gt;Remote HTTP over SSH tunnel&lt;br&gt;/var/run/docker.sock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=15;" parent="g3" vertex="1">
+          <mxGeometry x="500" y="175" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="&lt;b&gt;Docker Containers&lt;/b&gt;&lt;br&gt;Managed Workloads&lt;br&gt;+ ephemeral Alpine (disk check)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=15;" parent="g3" vertex="1">
+          <mxGeometry x="940" y="175" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" value="Docker Engine socket (/var/run/docker.sock)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;" parent="g3" source="14" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" value="Container lifecycle ops&#xa;(list · logs · inspect · restart · run)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;" parent="g3" source="15" target="16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2" value="&lt;b&gt;User (CLI)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;arcSize=20;" parent="1" vertex="1">
+          <mxGeometry x="585" y="160" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="&lt;b&gt;config.yaml&lt;/b&gt;&lt;br&gt;Server Registry&lt;br&gt;(name, host, username, key_filename)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="150" y="257.5" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="&lt;b&gt;.env&lt;/b&gt;&lt;br&gt;API_KEY (OpenAI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="150" y="352.5" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="&lt;b&gt;system_prompt.txt&lt;/b&gt;&lt;br&gt;Orchestrator Instructions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="150" y="442.5" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="&lt;b&gt;agent.py&lt;/b&gt;&lt;br&gt;Main Loop · ReAct Engine · Tool Dispatcher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=15;" parent="1" vertex="1">
+          <mxGeometry x="550" y="340" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="&lt;b&gt;OpenAI API&lt;/b&gt;&lt;br&gt;Chat Completions&lt;br&gt;(tool_choice=&quot;auto&quot;)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="990" y="552.5" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="&lt;b&gt;Monitor Sub-Agent&lt;/b&gt;&lt;br&gt;gpt-5.4-mini · read-only&lt;br&gt;list_containers · get_logs&lt;br&gt;inspect_container · check_disk" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=15;container=0;" parent="1" vertex="1">
+          <mxGeometry x="90" y="900" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="&lt;b&gt;RemoteDockerManager&lt;/b&gt;&lt;br&gt;tools.py · one instance per server&lt;br&gt;Lazy Docker client · SSH key auth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=15;" parent="1" vertex="1">
+          <mxGeometry x="330" y="1080" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="&lt;b&gt;SSH Transport&lt;/b&gt;&lt;br&gt;Paramiko via docker[ssh]&lt;br&gt;use_ssh_client=True" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;arcSize=15;" parent="1" vertex="1">
+          <mxGeometry x="340" y="1265" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="Natural language query" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="2" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Loads server config" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="4" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="API_KEY" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="5" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Orchestrator system prompt" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="6" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Chat Completions API (HTTP/REST)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="3" target="7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Initializes ReAct loop" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="3" target="8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="Function calling (ORCHESTRATOR_TOOLS)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0.184;entryY=0.906;entryDx=0;entryDy=0;fontSize=10;entryPerimeter=0;" parent="1" source="8" target="7" edge="1">
+          <mxGeometry x="0.1299" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" value="delegate_to_monitor" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=8 4;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;strokeColor=#9673a6;" parent="1" source="8" target="10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="Function calling (MONITOR_TOOLS)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.852;exitY=0.013;exitDx=0;exitDy=0;entryX=0.395;entryY=1.019;entryDx=0;entryDy=0;fontSize=10;exitPerimeter=0;entryPerimeter=0;" parent="1" source="10" target="7" edge="1">
+          <mxGeometry x="0.3318" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="286" y="810" />
+              <mxPoint x="1065" y="810" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" value="Function calling (ADMIN_TOOLS)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.709;exitY=-0.037;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=10;exitPerimeter=0;" parent="1" source="11" target="7" edge="1">
+          <mxGeometry x="-0.3823" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="796" y="840" />
+              <mxPoint x="1085" y="840" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" value="list_containers · get_logs&#xa;inspect_container · check_disk" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.2;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="10" target="12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" value="restart_container · wait" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="11" target="12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" value="DockerClient(base_url=&quot;ssh://user@host&quot;)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="12" target="13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" value="SSH tunneling (key-based auth)" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="13" target="14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" value="Reads container metrics via SSH tunnel" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;dashed=1;dashPattern=4 4;strokeColor=#d6b656;" parent="1" source="13" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="&lt;b&gt;Admin Sub-Agent&lt;/b&gt;&lt;br&gt;gpt-5.4-mini · mutating&lt;br&gt;restart_container · wait&lt;br&gt;(human approval gate)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=15;container=0;" parent="1" vertex="1">
+          <mxGeometry x="633" y="900" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="&lt;b&gt;Orchestrator Agent&lt;/b&gt;&lt;br&gt;gpt-5.5 · ORCHESTRATOR_TOOLS&lt;br&gt;(delegate_to_monitor / delegate_to_admin)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=15;container=0;" parent="1" vertex="1">
+          <mxGeometry x="340" y="710" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="delegate_to_admin" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=8 4;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;strokeColor=#9673a6;" parent="1" source="8" target="11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="548" y="985" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9" value="&lt;b&gt;tools_schema.py&lt;/b&gt;&lt;br&gt;Pydantic Models + OpenAI Tool Schemas&lt;br&gt;(ORCHESTRATOR / MONITOR / ADMIN _TOOLS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="126" y="567.5" width="250" height="65" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

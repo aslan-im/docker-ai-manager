@@ -5,9 +5,14 @@ from openai import OpenAI
 from tools import RemoteDockerManager
 from dotenv import load_dotenv
 from pydantic import ValidationError
+from tools_schema import (
+    DelegateArgs,
+    MONITOR_TOOLS,
+    ADMIN_TOOLS,
+    ORCHESTRATOR_TOOLS
+)
 
 from tools_schema import (
-    tools_schema,
     ListContainersArgs,
     GetContainerLogsArgs, 
     RestartContainerArgs, 
@@ -51,7 +56,8 @@ def _resolve_manager(server_name: str) -> "RemoteDockerManager | str":
     return mgr
 
 
-def interact_with_agent(messages: list):
+def interact_with_agent(messages: list, active_tools: list, model_name: str = "gpt-5.4-mini") -> str:
+
     """
     Processes the current message history through the ReAct loop 
     until the model provides a final text response.
@@ -59,10 +65,10 @@ def interact_with_agent(messages: list):
     """
     while True:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model_name,
             messages=messages,
-            tools=tools_schema,
-            tool_choice="auto"
+            tools=active_tools if active_tools else None,
+            tool_choice="auto" if active_tools else "none"
         )
         
         response_message = response.choices[0].message
@@ -78,7 +84,7 @@ def interact_with_agent(messages: list):
                 if function_name == "restart_container":
                     print(f"⚠️   CRITICAL: Agent wants to execute a destructive command!")
                     user_approval = input(f"Allow execution of {function_name}? (y/n): ").strip().lower()
-                    if user_approval != 'y':
+                    if user_approval != 'y' and user_approval != 'yes':
                         print("❌ Execution denied by user.")
                         messages.append({
                             "role": "tool",
@@ -88,7 +94,40 @@ def interact_with_agent(messages: list):
                         })
                         continue
                 try:
-                    if function_name == "list_containers":
+                    if function_name == "delegate_to_monitor":
+                        args = DelegateArgs.model_validate_json(raw_arguments)
+                        print(f"\n   ↳ 👔 Orchestrator delegates to Monitor: {args.instruction}")
+
+                        sub_messages = [
+                            {
+                                "role": "system",
+                                "content": "You are a read-only Monitor Agent. Fetch logs, check disk space, and list containers based on instructions. Return a clear summary."
+                            },
+                            {
+                                "role": "user",
+                                "content": args.instruction
+                            }
+                        ]
+
+                        tool_output = interact_with_agent(sub_messages, MONITOR_TOOLS, model_name="gpt-5.4-mini")
+                    elif function_name == "delegate_to_admin":
+                        args = DelegateArgs.model_validate_json(raw_arguments)
+                        print(f"\n   ↳ 👔 Orchestrator delegates to Admin: {args.instruction}")
+
+                        sub_messages = [
+                            {
+                                "role": "system",
+                                "content": "You are an Admin Agent. Execute restart and wait commands based on instructions. Return a clear summary."
+                            },
+                            {
+                                "role": "user",
+                                "content": args.instruction
+                            }
+                        ]
+
+                        tool_output = interact_with_agent(sub_messages, ADMIN_TOOLS, model_name="gpt-5.4-mini")
+                    
+                    elif function_name == "list_containers":
                         args = ListContainersArgs.model_validate_json(raw_arguments)
                         mgr = _resolve_manager(args.server_name)
                         if isinstance(mgr, str):
@@ -160,8 +199,7 @@ def interact_with_agent(messages: list):
             continue
             
         if response_message.content:
-            print(f"\n🤖 [Agent Response]:\n{response_message.content}\n")
-            break
+            return response_message.content
 
 def main():
     print("====================================================")
@@ -185,7 +223,12 @@ def main():
                 continue
 
             session_history.append({"role": "user", "content": user_input})
-            interact_with_agent(session_history)
+            final_answer = interact_with_agent(
+                session_history, 
+                active_tools=ORCHESTRATOR_TOOLS, 
+                model_name="gpt-5.5"
+            )
+            print(f"\n🤖 [Orchestrator]:\n{final_answer}\n")
 
         except KeyboardInterrupt:
             print("\nSession interrupted. Goodbye!")
