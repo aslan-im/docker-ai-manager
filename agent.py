@@ -21,8 +21,6 @@ from tools_schema import (
     CheckDiskSpaceArgs
 )
 
-DEBUG = True
-
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
